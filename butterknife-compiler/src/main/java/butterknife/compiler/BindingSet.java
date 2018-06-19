@@ -689,19 +689,24 @@ final class BindingSet {
     ClassName bindingClassName = ClassName.get(packageName, className + "_ViewBinding");
 
     boolean isFinal = enclosingElement.getModifiers().contains(Modifier.FINAL);
+    // TODO: 18-6-19 传参分别是 有注解的对应类的类名；生成的类名；是否是final，view，activity，dialog
     return new Builder(targetType, bindingClassName, isFinal, isView, isActivity, isDialog);
   }
 
+  // TODO: 18-6-19 此类对应我们要生成代码所需要的所有信息
   static final class Builder {
+    // TODO: 18-6-19 有注解的对应类的类名
     private final TypeName targetTypeName;
+    // TODO: 18-6-19 注解器生成的类的类名
     private final ClassName bindingClassName;
+    // TODO: 18-6-19 标记是不是final view activity 以及dialog
     private final boolean isFinal;
     private final boolean isView;
     private final boolean isActivity;
     private final boolean isDialog;
 
     private BindingSet parentBinding;
-
+    // TODO: 18-6-19 一个id对应一个 ViewBinding.Builder
     private final Map<Id, ViewBinding.Builder> viewIdMap = new LinkedHashMap<>();
     private final ImmutableList.Builder<FieldCollectionViewBinding> collectionBindings =
         ImmutableList.builder();
