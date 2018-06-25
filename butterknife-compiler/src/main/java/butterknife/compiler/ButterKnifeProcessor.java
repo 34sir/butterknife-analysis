@@ -144,9 +144,12 @@ public final class ButterKnifeProcessor extends AbstractProcessor {
 
         debuggable = !"false".equals(env.getOptions().get(OPTION_DEBUGGABLE));
 
+        // TODO: 18-6-25  typeUtils 用来处理TypeMirror的工具类
         typeUtils = env.getTypeUtils();
+        // TODO: 18-6-25 filer 用来生成java的源文件
         filer = env.getFiler();
         try {
+            // TODO: 18-6-25 语法分析树
             trees = Trees.instance(processingEnv);
         } catch (IllegalArgumentException ignored) {
         }
@@ -194,11 +197,11 @@ public final class ButterKnifeProcessor extends AbstractProcessor {
         // TODO: 18-6-4 查找所有的注解 并且根据注解生成BindingSet
         Map<TypeElement, BindingSet> bindingMap = findAndParseTargets(env);
 
-        // TODO: 18-6-4 遍历步骤map 的生成.java文件也就是类名_ViewBinding的java文件
+        // TODO: 18-6-4 遍历步骤map 生成.java文件也就是类名_ViewBinding的java文件
         for (Map.Entry<TypeElement, BindingSet> entry : bindingMap.entrySet()) {
             TypeElement typeElement = entry.getKey();
             BindingSet binding = entry.getValue();
-
+        // TODO: 18-6-25 使用开源库javapoet生成Java文件
             JavaFile javaFile = binding.brewJava(sdk, debuggable);
             try {
                 javaFile.writeTo(filer);
@@ -358,6 +361,7 @@ public final class ButterKnifeProcessor extends AbstractProcessor {
 
         // Associate superclass binders with their subclass binders. This is a queue-based tree walk
         // which starts at the roots (superclasses) and walks to the leafs (subclasses).
+        // TODO: 18-6-19 将Map.Entry<TypeElement, BindingSet.Builder>转化为Map<TypeElement, BindingSet>
         Deque<Map.Entry<TypeElement, BindingSet.Builder>> entries =
                 new ArrayDeque<>(builderMap.entrySet());
         Map<TypeElement, BindingSet> bindingMap = new LinkedHashMap<>();

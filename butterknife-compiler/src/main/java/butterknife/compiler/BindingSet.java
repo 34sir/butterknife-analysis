@@ -766,6 +766,7 @@ final class BindingSet {
     private ViewBinding.Builder getOrCreateViewBindings(Id id) {
       ViewBinding.Builder viewId = viewIdMap.get(id);
       if (viewId == null) {
+        // TODO: 18-6-25 构建Builder
         viewId = new ViewBinding.Builder(id);
         viewIdMap.put(id, viewId);
       }
